@@ -1,0 +1,4 @@
+- name: Install android-sdk with Chocolatey
+  win_chocolatey:
+    name: android-sdk
+    state: present

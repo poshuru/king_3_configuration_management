@@ -1,0 +1,20 @@
+- name: Create android-sdk directory
+  file:
+    path: "{{ android_sdk_path }}"
+    state: directory
+
+- name: Check if sdkmanager already exists
+  stat:
+    path: "{{ android_sdk_path }}/tools/bin/sdkmanager"
+  register: sdkmanager_binary_exists
+
+- name: Install Android SDK
+  block:
+  - name: Download and extract archive into android-sdk directory
+    unarchive:
+      src: https://dl.google.com/android/repository/sdk-tools-linux-3859397.zip
+      dest: "{{ android_sdk_path }}"
+      remote_src: yes
+  - name: Accept SDK licences
+    shell: "yes | {{ android_sdk_path }}/tools/bin/sdkmanager --licenses"
+  when: not sdkmanager_binary_exists.stat.exists

@@ -1,0 +1,20 @@
+- name: Run Debian installation
+  include: debian.yml
+  when: ansible_os_family == "Debian"
+
+- name: Run RedHat installation
+  include: redhat.yml
+  when: ansible_os_family == "RedHat"
+
+- name: Run MacOS installation
+  include: macos.yml
+  when: ansible_os_family == "Darwin"
+
+- name: Run Windows installation
+  include: windows.yml
+  when: ansible_os_family == "Windows"
+
+- name: Fail due to unsupported version
+  fail:
+    msg: "This role doesn't support your OS"
+  when: ansible_os_family not in ["Debian", "RedHat", "Darwin", "Windows"]

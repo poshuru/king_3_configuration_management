@@ -1,0 +1,4 @@
+- name: Install package android-sdk
+  apt:
+    pkg: android-sdk
+    state: present
